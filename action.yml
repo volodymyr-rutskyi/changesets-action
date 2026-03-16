@@ -29,6 +29,9 @@ inputs:
     description: |
       Paths to directories containing `.changeset` directory, separated by `,`.
     required: false
+  prDescriptionHint:
+    description: A hint to display on top of the PR description. If not specified, the default hint will be used.
+    required: false
   title:
     description: The pull request title. Default to `Version Packages`
     required: false
