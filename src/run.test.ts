@@ -130,6 +130,50 @@ describe("version", () => {
     expect(mockedGithubMethods.pulls.create.mock.calls[0]).toMatchSnapshot();
   });
 
+  it("creates a PR with custom description hint", async () => {
+
+    let cwd = f.copy("simple-project");
+    linkNodeModules(cwd);
+
+    mockedGithubMethods.search.issuesAndPullRequests.mockImplementationOnce(
+      () => ({ data: { items: [] } })
+    );
+
+    mockedGithubMethods.pulls.create.mockImplementationOnce(() => ({
+      data: { number: 123 },
+    }));
+
+    await writeChangesets(
+      [
+        {
+          releases: [
+            {
+              name: "simple-project-pkg-a",
+              type: "minor",
+            },
+            {
+              name: "simple-project-pkg-b",
+              type: "minor",
+            },
+          ],
+          summary: "Awesome feature",
+        },
+      ],
+      cwd
+    );
+
+    await runVersion({
+      githubToken: "@@GITHUB_TOKEN",
+      cwd,
+      prBranch: 'custom-release-branch',
+      prDescriptionHint: `This is a custom description hint. 
+It is multiline.
+Has a [link](https://github.com/).`,
+    });
+
+    expect(mockedGithubMethods.pulls.create.mock.calls[0]).toMatchSnapshot();
+  })
+
   it("only includes bumped packages in the PR body", async () => {
     let cwd = f.copy("simple-project");
     linkNodeModules(cwd);

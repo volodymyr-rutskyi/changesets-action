@@ -185,6 +185,7 @@ type GetMessageOptions = {
   }[];
   prBodyMaxCharacters: number;
   preState?: PreState;
+  prDescriptionHint?: string;
 };
 
 export async function getVersionPrBody({
@@ -193,8 +194,9 @@ export async function getVersionPrBody({
   changedPackagesInfo,
   prBodyMaxCharacters,
   branch,
+  prDescriptionHint,
 }: GetMessageOptions) {
-  let messageHeader = `This PR was opened by the [Changesets release](https://github.com/changesets/action) GitHub action. When you're ready to do a release, you can merge this and ${
+  let messageHeader = prDescriptionHint || `This PR was opened by the [Changesets release](https://github.com/changesets/action) GitHub action. When you're ready to do a release, you can merge this and ${
     hasPublishScript
       ? `the packages will be published to npm automatically`
       : `publish to npm yourself or [setup this action to publish automatically](https://github.com/changesets/action#with-publishing)`
@@ -252,6 +254,7 @@ type VersionOptions = {
   hasPublishScript?: boolean;
   prBodyMaxCharacters?: number;
   prBranch?: string;
+  prDescriptionHint?: string;
 };
 
 type RunVersionResult = {
@@ -267,6 +270,7 @@ export async function runVersion({
   hasPublishScript = false,
   prBodyMaxCharacters = MAX_CHARACTERS_PER_MESSAGE,
   prBranch,
+  prDescriptionHint,
 }: VersionOptions): Promise<RunVersionResult> {
   const octokit = github.getOctokit(githubToken);
 
@@ -344,6 +348,7 @@ export async function runVersion({
     branch,
     changedPackagesInfo,
     prBodyMaxCharacters,
+    prDescriptionHint,
   });
 
   if (searchResult.data.items.length === 0) {

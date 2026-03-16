@@ -1,5 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`version creates a PR with custom description hint 1`] = `
+Array [
+  Object {
+    "base": "some-branch",
+    "body": "This is a custom description hint. 
+It is multiline.
+Has a [link](https://github.com/).
+
+# Releases
+## simple-project-pkg-a@1.1.0
+
+### Minor Changes
+
+-   Awesome feature
+
+### Patch Changes
+
+-   Updated dependencies
+    -   simple-project-pkg-b@1.1.0
+
+## simple-project-pkg-b@1.1.0
+
+### Minor Changes
+
+-   Awesome feature
+",
+    "head": "custom-release-branch",
+    "owner": "changesets",
+    "repo": "action",
+    "title": "Version Packages",
+  },
+]
+`;
+
 exports[`version creates simple PR 1`] = `
 Array [
   Object {

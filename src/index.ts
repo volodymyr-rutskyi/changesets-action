@@ -128,6 +128,7 @@ const getChangesetCwds = () =>
         commitMessage: getOptionalInput("commit"),
         hasPublishScript,
         prBranch: getOptionalInput("branch"),
+        prDescriptionHint: getOptionalInput("prDescriptionHint"),
       });
 
       core.setOutput("pullRequestNumber", String(pullRequestNumber));
