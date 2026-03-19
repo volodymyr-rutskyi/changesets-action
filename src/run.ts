@@ -196,6 +196,8 @@ export async function getVersionPrBody({
   branch,
   prDescriptionHint,
 }: GetMessageOptions) {
+  console.log('Creating PR description ' + prDescriptionHint ? 'with custom hint' : 'without custom hint');
+
   let messageHeader = prDescriptionHint || `This PR was opened by the [Changesets release](https://github.com/changesets/action) GitHub action. When you're ready to do a release, you can merge this and ${
     hasPublishScript
       ? `the packages will be published to npm automatically`
